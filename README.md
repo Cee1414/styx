@@ -9,4 +9,7 @@ Styx is a small compiler that carries code downward, from raw syntax into execut
 ```bash
 antlr4 -visitor styx.g4
 javac -cp "$CP:." *.java
+
+## Run/Test
+```bash
 echo "5+2*3+4" | java -cp "$CP:." Driver
