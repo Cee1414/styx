@@ -1,2 +1,16 @@
 .vscode
-input.txt
+
+# Java compiled files
+*.class
+
+# ANTLR generated files
+styxLexer.java
+styxParser.java
+styxListener.java
+styxBaseListener.java
+styxVisitor.java
+styxBaseVisitor.java
+
+# ANTLR metadata
+*.tokens
+*.interp

@@ -4,7 +4,7 @@ import Lexer;
 prog: stat+ ;
 
 stat
-  : expr NEWLINE          # printExpr
+  : expr NEWLINE          # ExprStmt
   | ID '=' expr NEWLINE   # assign
   | NEWLINE               # blank
   ;
