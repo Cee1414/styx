@@ -8,6 +8,10 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
         return visit(ctx.expr());
     }
 
+    public ASTNode visitParens(styxParser.ParensContext ctx) {
+        return visit(ctx.expr());
+    }
+
     @Override
     public ASTNode visitMulDiv(styxParser.MulDivContext ctx) {
         ASTNode left = visit(ctx.expr(0));
