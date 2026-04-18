@@ -1,7 +1,7 @@
 grammar styx;
 import Lexer;
 
-prog: stat+ ;
+prog: stat+ EOF;
 
 stat
   : expr NEWLINE          # ExprStmt

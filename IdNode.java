@@ -1,7 +1,8 @@
-public class IdNode {
-   String Id;
+public class IdNode extends ASTNode{
+   String id;
+   
 
-   public IdNode(String Id) {
-      this.Id = Id;
+   public IdNode(String id) {
+      this.id = id;
    }
 }
