@@ -1,0 +1,13 @@
+Example Future Output (ILOC - Not Implemented)
+
+For the input: 5+2*3+4
+
+loadI 2 => r1
+loadI 3 => r2
+mult r1, r2 => r3
+
+loadI 5 => r4
+add r4, r3 => r5
+
+loadI 4 => r6
+add r5, r6 => r7
