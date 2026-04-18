@@ -4,8 +4,8 @@ import Lexer;
 prog: stat+ EOF;
 
 stat
-  : expr NEWLINE          # ExprStmt
-  | ID '=' expr NEWLINE   # assign
+  : expr ( NEWLINE | EOF )         # ExprStmt
+  | ID '=' expr ( NEWLINE | EOF )   # assign
   | NEWLINE               # blank
   ;
 
