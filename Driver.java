@@ -13,7 +13,14 @@ public class Driver {
         ParseTree tree = parser.prog();
 
         ASTBuilder builder = new ASTBuilder();
-
+    
+        // Print AST
+        System.out.println("print AST");
         ASTPrinter.printAST(builder.visit(tree), 0);
+        //Verify assignment
+        System.out.println("\nsemantic check");
+        Semantic verifier = new Semantic();
+        verifier.checkAssignment(builder.visit(tree));
+        System.out.println("\nverified assignment");
     }
 }
