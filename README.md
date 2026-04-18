@@ -24,6 +24,37 @@ Styx is a small compiler that carries code downward, from raw syntax into execut
 - Java (JDK 8+)
 - ANTLR4 (`antlr4` command available)
 
+## Installing Dependencies
+
+### Java (JDK 8+)
+
+Check if Java is installed:
+
+```bash
+java -version
+javac -version
+```
+
+If not installed:
+
+Ubuntu / Debian
+```
+sudo apt update
+sudo apt install openjdk-8-jdk
+```
+ANTLR4
+
+Check if installed:
+```
+antlr4
+```
+If not installed:
+```
+Download:
+https://www.antlr.org/download/antlr-4.13.1-complete.jar
+Create alias:
+alias antlr4='java -jar ~/antlr-4.13.1-complete.jar'
+```
 ## Build
 
 ```bash
