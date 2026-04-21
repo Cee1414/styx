@@ -8,6 +8,7 @@ import java.util.Set;
 public class CodeGen {
 
     HashMap<String, Integer> memory = new HashMap<>();
+    int variableOffset= 0;
     List<String> out = new ArrayList<>();
 
     private void emit(String s) {
@@ -24,26 +25,22 @@ public class CodeGen {
     
     public void descendStatements(ASTNode node) {
 
-        if (node instanceof ProgramNode ) {
-            ProgramNode prog = (ProgramNode) node;
-
-            for (ASTNode stmt : prog.statements) {
-                descendStatements(stmt);
-            }
-        }
-        else if (node instanceof IntNode) {
+        if (node instanceof IntNode) {
         IntNode intNode = (IntNode) node;
         emit("loadI " + intNode.value + " => r2");
         pushReg("r2");
         return;
         }
-        // else if (node instanceof IdNode) {
-        // //TODO FIXME
-        // IdNode idNode = (IdNode) node;
-        // if (!memory.contains(idNode.id)) {
-        //     System.out.println("Error: " + idNode.id + " used before assignment");
-        // }
-        // }  
+        else if (node instanceof IdNode) {
+        IdNode idNode = (IdNode) node;
+        if (!memory.containsKey(idNode.id)) {
+            System.out.println("Error: " + idNode.id + " used before assignment");
+        }
+        emit("loadAI " + "r0, " + memory.get(idNode.id) + " => r2");
+        // emit("loadAI r1, 0 => " + reg);
+        pushReg("r2");
+        return;
+        }  
         else if (node instanceof OperationNode) {
         OperationNode opNode = (OperationNode) node;
         descendStatements(opNode.left);
@@ -63,22 +60,40 @@ public class CodeGen {
             pushReg("r2");
             return;
         }
-        // else if (node instanceof AssignNode) {
-        // AssignNode assignmentStatement = (AssignNode) node;
-        // String id = assignmentStatement.id.id;
-        // descendStatements(assignmentStatement.value);
-        // memory.add(id);
-        // }
+        else if (node instanceof AssignNode) {
+        AssignNode assignmentStatement = (AssignNode) node;
+        String id = assignmentStatement.id.id;        
+        descendStatements(assignmentStatement.value);
+        popTo("r2");
+
+        if (!memory.containsKey(id)) {
+        memory.put(id, variableOffset);
+        variableOffset += 8;
+        }
+
+        int variableOffset = memory.get(id);
+        emit("storeAI " + "r2" + " => r0, " + variableOffset);
+        pushReg("r2");
+        }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
         }
 
     }
 
-    public List<String> generate(ASTNode e) {
+    public List<String> generate(ASTNode node) {
         out.clear();
-        descendStatements(e);
-        popTo("r2");
+
+        // INIT STEP (PROLOGUE)
+        emit("loadI 0 => r0");
+        emit("loadI 256 => r1");
+
+        ProgramNode prog = (ProgramNode) node;
+
+            for (ASTNode stmt : prog.statements) {
+                descendStatements(stmt);
+                popTo("r2");
+            }        
         return out;
         }
 

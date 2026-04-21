@@ -18,6 +18,12 @@ Styx is a small compiler that carries code downward, from raw syntax into execut
 - Supports multi-line programs with multiple statements
 - Accepts input from standard input or file redirection
 
+- enerates ILOC/Nickle-style intermediate code using stack-based expression evaluation
+- Evaluates expressions in postorder (left → right → operator)
+- Pushes intermediate values onto a memory-backed stack and pops operands for computation
+- Emits arithmetic instructions (`add`, `sub`, `mult`, `div`) over register values
+- Stores variables at fixed memory offsets and loads them when referenced
+
 
 ## Dependencies
 
