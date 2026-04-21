@@ -1,3 +1,5 @@
+import java.util.List;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,13 +16,22 @@ public class Driver {
 
         ASTBuilder builder = new ASTBuilder();
     
+        ASTNode ast = builder.visit(tree);
+
         // Print AST
         System.out.println("print AST");
-        ASTPrinter.printAST(builder.visit(tree), 0);
+        ASTPrinter.printAST(ast, 0);
         //Verify assignment
         System.out.println("\nsemantic check");
         Semantic verifier = new Semantic();
-        verifier.checkAssignment(builder.visit(tree));
+        verifier.checkAssignment(ast);
         System.out.println("\nverified assignment");
+
+        CodeGen gen = new CodeGen();
+        List<String> code = gen.generate(ast);
+        for (String line : code) {
+            System.out.println(line);
+        }
+
     }
 }

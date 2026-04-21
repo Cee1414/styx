@@ -1,10 +1,6 @@
 public class ASTPrinter {
     public static void printAST(ASTNode node, int indent) {
 
-        if (node == null) { 
-            return;
-        }
-
         for (int i = 0; i < indent; i++) {
         System.out.print("  ");
         }

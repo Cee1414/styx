@@ -7,9 +7,6 @@ public class Semantic {
     Set<String> memory = new HashSet<>();
     public void checkAssignment(ASTNode node) {
 
-        if(node == null) {
-            return;
-        }
         if (node instanceof ProgramNode ) {
             ProgramNode prog = (ProgramNode) node;
 
