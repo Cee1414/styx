@@ -47,6 +47,22 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
     }
 
     @Override
+    public ASTNode visitComparison(styxParser.ComparisonContext ctx) {
+        ASTNode left = visit(ctx.expr(0));
+        ASTNode right = visit(ctx.expr(1));
+        String op = ctx.op.getText();
+        return new OperationNode(op, left, right);
+    }   
+
+    @Override
+    public ASTNode visitEquality(styxParser.EqualityContext ctx) {
+        ASTNode left = visit(ctx.expr(0));
+        ASTNode right = visit(ctx.expr(1));
+        String op = ctx.op.getText();
+        return new OperationNode(op, left, right);
+    }   
+
+    @Override
     public ASTNode visitAssign(styxParser.AssignContext ctx) {
         IdNode id = new IdNode(ctx.ID().getText());
         ASTNode value = visit(ctx.expr());

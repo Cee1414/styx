@@ -31,7 +31,7 @@ expr
   : expr op=('*'|'/') expr   # mulDiv
   | expr op=('+'|'-') expr   # addSub
   | expr op=('>'|'<') expr   # comparison
-  | expr op='=='    expr   # equality
+  | expr   op='=='    expr   # equality
   | INT                      # int
   | ID                       # id
   | '(' expr ')'             # parens

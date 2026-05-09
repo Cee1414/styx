@@ -54,6 +54,9 @@ public class CodeGen {
                 case "-" -> emit("sub r2, r3 => r2");
                 case "*" -> emit("mult r2, r3 => r2");
                 case "/" -> emit("div r2, r3 => r2");
+                case ">" -> emit("cmp_GT r2, r3 => r2");
+                case "<" -> emit("cmp_LT r2, r3 => r2");
+                case "==" -> emit("cmp_EQ r2, r3 => r2");
                 default -> throw new RuntimeException("unknown binary op: " + opNode.operation);
             }
 
