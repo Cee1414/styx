@@ -55,6 +55,12 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
     }
 
     @Override
+    public PrintNode visitPrintStmt(styxParser.PrintStmtContext ctx) {
+        ASTNode value = visit(ctx.expr());
+        return new PrintNode(value);
+    }
+
+    @Override
     public ASTNode visitInt(styxParser.IntContext ctx) {
         int value = Integer.parseInt(ctx.INT().getText());
         return new IntNode(value);

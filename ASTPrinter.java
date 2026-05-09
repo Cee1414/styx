@@ -30,6 +30,11 @@ public class ASTPrinter {
         printAST(assignmentStatement.id, indent + 1);
         printAST(assignmentStatement.value, indent + 1);
         }
+        else if (node instanceof PrintNode) {
+        PrintNode printStatement = (PrintNode) node;
+        System.out.println("Print");
+        printAST(printStatement.value, indent + 1);
+        }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
         }

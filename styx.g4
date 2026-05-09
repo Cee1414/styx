@@ -6,6 +6,7 @@ prog: stat+ EOF;
 stat
   : expr ( NEWLINE | EOF )         # ExprStmt
   | ID '=' expr ( NEWLINE | EOF )   # assign
+  | 'print' '(' expr ')' ( NEWLINE | EOF ) # printStmt
   | NEWLINE               # blank
   ;
 

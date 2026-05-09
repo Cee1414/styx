@@ -26,30 +26,30 @@ public class CodeGen {
     public void descendStatements(ASTNode node) {
 
         if (node instanceof IntNode) {
-        IntNode intNode = (IntNode) node;
-        emit("loadI " + intNode.value + " => r2");
-        pushReg("r2");
-        return;
+            IntNode intNode = (IntNode) node;
+            emit("loadI " + intNode.value + " => r2");
+            pushReg("r2");
+            return;
         }
         else if (node instanceof IdNode) {
-        IdNode idNode = (IdNode) node;
-        if (!memory.containsKey(idNode.id)) {
-            System.out.println("Error: " + idNode.id + " used before assignment");
-        }
-        emit("loadAI " + "r0, " + memory.get(idNode.id) + " => r2");
-        // emit("loadAI r1, 0 => " + reg);
-        pushReg("r2");
-        return;
+            IdNode idNode = (IdNode) node;
+            if (!memory.containsKey(idNode.id)) {
+                System.out.println("Error: " + idNode.id + " used before assignment");
+            }
+            emit("loadAI " + "r0, " + memory.get(idNode.id) + " => r2");
+            // emit("loadAI r1, 0 => " + reg);
+            pushReg("r2");
+            return;
         }  
         else if (node instanceof OperationNode) {
-        OperationNode opNode = (OperationNode) node;
-        descendStatements(opNode.left);
-        descendStatements(opNode.right);
+            OperationNode opNode = (OperationNode) node;
+            descendStatements(opNode.left);
+            descendStatements(opNode.right);
 
-        popTo("r3");
-        popTo("r2");
+            popTo("r3");
+            popTo("r2");
 
-        switch (opNode.operation) {
+            switch (opNode.operation) {
                 case "+" -> emit("add r2, r3 => r2");
                 case "-" -> emit("sub r2, r3 => r2");
                 case "*" -> emit("mult r2, r3 => r2");
@@ -61,19 +61,27 @@ public class CodeGen {
             return;
         }
         else if (node instanceof AssignNode) {
-        AssignNode assignmentStatement = (AssignNode) node;
-        String id = assignmentStatement.id.id;        
-        descendStatements(assignmentStatement.value);
-        popTo("r2");
+            AssignNode assignmentStatement = (AssignNode) node;
+            String id = assignmentStatement.id.id;        
+            descendStatements(assignmentStatement.value);
+            popTo("r2");
 
-        if (!memory.containsKey(id)) {
-        memory.put(id, variableOffset);
-        variableOffset += 8;
+            if (!memory.containsKey(id)) {
+            memory.put(id, variableOffset);
+            variableOffset += 8;
+            }
+
+            int variableOffset = memory.get(id);
+            emit("storeAI " + "r2" + " => r0, " + variableOffset);
+            pushReg("r2");
         }
-
-        int variableOffset = memory.get(id);
-        emit("storeAI " + "r2" + " => r0, " + variableOffset);
-        pushReg("r2");
+        else if (node instanceof PrintNode) {
+            PrintNode printStatement = (PrintNode) node;
+            descendStatements(printStatement.value);
+            popTo("r2");
+            String printRegister = "r2";
+            emit("p_int " + printRegister);
+            pushReg("r2");
         }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());

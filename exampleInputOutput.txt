@@ -1,8 +1,12 @@
+example INPUT:
+
 a=10
 b=a*2
 c=b/5
 d=c+a*(b-3)
 d
+
+GENERATED OUTPUT:
 
 ian@ian-g428:~/Desktop/Compiler/styx$ java -cp "$CP:." Driver < input7.txt
 ANTLR Tool version 4.7.2 used for code generation does not match the current runtime version 4.9.2

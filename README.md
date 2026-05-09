@@ -73,3 +73,6 @@ javac -cp "$CP:." *.java
 ```bash
 echo "5+2*3+4" | java -cp "$CP:." Driver
 java -cp "$CP:." Driver < input.txt
+
+## View Parse Tree
+echo "2+3*(2+3)"  | java -cp "$CP:." org.antlr.v4.gui.TestRig Expr1 prog -gui

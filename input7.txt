@@ -2,4 +2,4 @@ a=10
 b=a*2
 c=b/5
 d=c+a*(b-3)
-d
+print(d)

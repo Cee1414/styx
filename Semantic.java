@@ -34,6 +34,10 @@ public class Semantic {
         checkAssignment(assignmentStatement.value);
         memory.add(id);
         }
+        else if (node instanceof PrintNode) {
+            PrintNode printStatement = (PrintNode) node;
+            checkAssignment(printStatement.value);
+        }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
         }
