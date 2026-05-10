@@ -1,9 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CodeGen {
 
@@ -76,7 +74,6 @@ public class CodeGen {
 
             int variableOffset = memory.get(id);
             emit("storeAI " + "r2" + " => r0, " + variableOffset);
-            pushReg("r2");
         }
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;
@@ -84,7 +81,17 @@ public class CodeGen {
             popTo("r2");
             String printRegister = "r2";
             emit("p_int " + printRegister);
-            pushReg("r2");
+        }
+        else if (node instanceof BlockNode) {
+            BlockNode blockStatement = (BlockNode) node;
+            for (ASTNode stmt : blockStatement.statements) {
+            descendStatements(stmt);
+        }      
+        }
+        else if (node instanceof ExprNode) {
+            ExprNode exprStatement = (ExprNode) node;
+            descendStatements(exprStatement.value);
+            popTo("r2"); //unused value
         }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
@@ -99,11 +106,10 @@ public class CodeGen {
         emit("loadI 0 => r0");
         emit("loadI 256 => r1");
 
-        ProgramNode prog = (ProgramNode) node;
+        BlockNode block = (BlockNode) node;
 
-            for (ASTNode stmt : prog.statements) {
+            for (ASTNode stmt : block.statements) {
                 descendStatements(stmt);
-                popTo("r2");
             }        
         return out;
         }

@@ -8,6 +8,21 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitProg(styxParser.ProgContext ctx) {
+        return visit(ctx.mainFunction());
+    }
+
+    @Override
+    public ASTNode visitMainFunction(styxParser.MainFunctionContext ctx) {
+        return visit(ctx.block());
+    }
+
+    @Override
+    public ASTNode visitBlockStmt(styxParser.BlockStmtContext ctx) {
+        return visit(ctx.block());
+    }
+
+    @Override
+    public ASTNode visitBlock(styxParser.BlockContext ctx) {
         List<ASTNode> statements = new ArrayList<>();
 
         for (styxParser.StatContext s : ctx.stat()) {
@@ -17,13 +32,16 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
             }
         }
 
-        return new ProgramNode(statements);
+        return new BlockNode(statements);
     }
     
+    @Override
     public ASTNode visitExprStmt(styxParser.ExprStmtContext ctx) {
-        return visit(ctx.expr());
+        ASTNode value = visit(ctx.expr());
+        return new ExprNode(value);
     }
 
+    @Override
     public ASTNode visitParens(styxParser.ParensContext ctx) {
         return visit(ctx.expr());
     }

@@ -4,11 +4,11 @@ public class ASTPrinter {
         for (int i = 0; i < indent; i++) {
         System.out.print("  ");
         }
-        if (node instanceof ProgramNode ) {
-            ProgramNode prog = (ProgramNode) node;
-            System.out.println("Prog");
+        if (node instanceof BlockNode ) {
+            BlockNode block = (BlockNode) node;
+            System.out.println("Block");
 
-            for (ASTNode stmt : prog.statements) {
+            for (ASTNode stmt : block.statements) {
                 printAST(stmt, indent + 1);
             }
         }
@@ -29,6 +29,11 @@ public class ASTPrinter {
         System.out.println("=");
         printAST(assignmentStatement.id, indent + 1);
         printAST(assignmentStatement.value, indent + 1);
+        }
+        else if (node instanceof ExprNode) {
+            ExprNode exprNode = (ExprNode) node;
+            System.out.println("ExprStmt");
+            printAST(exprNode.value, indent + 1);
         }
         else if (node instanceof PrintNode) {
         PrintNode printStatement = (PrintNode) node;

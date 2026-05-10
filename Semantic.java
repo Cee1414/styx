@@ -7,10 +7,10 @@ public class Semantic {
     Set<String> memory = new HashSet<>();
     public void checkAssignment(ASTNode node) {
 
-        if (node instanceof ProgramNode ) {
-            ProgramNode prog = (ProgramNode) node;
+        if (node instanceof BlockNode ) {
+            BlockNode block = (BlockNode) node;
 
-            for (ASTNode stmt : prog.statements) {
+            for (ASTNode stmt : block.statements) {
                 checkAssignment(stmt);
             }
         }
@@ -37,6 +37,9 @@ public class Semantic {
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;
             checkAssignment(printStatement.value);
+        }
+        else if (node instanceof ExprNode) {
+            System.out.println("unused expression, skipping evaluation");
         }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());

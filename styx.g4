@@ -1,13 +1,21 @@
 grammar styx;
 import Lexer;
 
-prog: stat+ EOF;
+prog: mainFunction EOF;
+
+mainFunction
+  : 'main' '('')' block
+  ;
+
+block
+  : '{' stat* '}'
+  ;
 
 stat
-  : expr ( NEWLINE | EOF )         # ExprStmt
-  | ID '=' expr ( NEWLINE | EOF )   # assign
-  | 'print' '(' expr ')' ( NEWLINE | EOF ) # printStmt
-  | NEWLINE               # blank
+  : expr ';'                 # ExprStmt
+  | ID '=' expr ';'          # assign
+  | 'print' '(' expr ')' ';' # printStmt
+  | block                    # blockStmt
   ;
 
 expr
