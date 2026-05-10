@@ -8,7 +8,7 @@ import java.util.Set;
 public class CodeGen {
 
     HashMap<String, Integer> memory = new HashMap<>();
-    int variableOffset= 0;
+    int nextVariableOffset= 0;
     List<String> out = new ArrayList<>();
 
     private void emit(String s) {
@@ -70,8 +70,8 @@ public class CodeGen {
             popTo("r2");
 
             if (!memory.containsKey(id)) {
-            memory.put(id, variableOffset);
-            variableOffset += 8;
+            memory.put(id, nextVariableOffset);
+            nextVariableOffset += 8;
             }
 
             int variableOffset = memory.get(id);
