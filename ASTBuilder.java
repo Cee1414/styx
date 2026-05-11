@@ -48,6 +48,16 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
         ASTNode value = visit(ctx.expr());
         return new ExprNode(value);
     }
+    @Override
+    public ASTNode visitIfStmt(styxParser.IfStmtContext ctx) {
+        ASTNode condition = visit(ctx.expr());
+        BlockNode thenBlock = (BlockNode) visit(ctx.block(0)); 
+        BlockNode elseBlock = null;
+        if (ctx.block().size() > 1) {
+            elseBlock = (BlockNode) visit(ctx.block(1)); 
+        }
+        return new IfNode(condition, thenBlock, elseBlock);
+    }
 
     @Override
     public ASTNode visitParens(styxParser.ParensContext ctx) {

@@ -16,10 +16,11 @@ block
   ;
 
 stat
-  : expr ';'                 # ExprStmt
-  | ID '=' expr ';'          # assign
-  | 'print' '(' expr ')' ';' # printStmt
-  | block                    # blockStmt
+  : expr ';'                                  # ExprStmt
+  | ID '=' expr ';'                           # assign
+  | 'if' '(' expr ')' block ('else' block)?   # ifStmt
+  | 'print' '(' expr ')' ';'                  # printStmt
+  | block                                     # blockStmt
   ;
 
 expr

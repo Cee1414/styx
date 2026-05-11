@@ -20,6 +20,14 @@ public class CodeGen {
         emit("subI r1, 8 => r1");
         emit("loadAI r1, 0 => " + reg);
     }
+
+    int labelCounter = 0;
+
+    private String getLabel() {
+        String label = "L" + labelCounter;
+        labelCounter += 1;
+        return label;
+    }
     
     public void descendStatements(ASTNode node) {
 
@@ -74,6 +82,31 @@ public class CodeGen {
 
             int variableOffset = memory.get(id);
             emit("storeAI " + "r2" + " => r0, " + variableOffset);
+        }
+        else if (node instanceof IfNode) {
+            IfNode ifNode = (IfNode) node;
+            descendStatements(ifNode.condition);
+            String lTrue = getLabel();
+            String lFalse = getLabel();
+            String lJoin = getLabel();
+            if (ifNode.elseBlock != null){
+            popTo("r2");
+            emit("cbr r2 => " + lTrue + ", " + lFalse);
+            emit(lTrue + ": nop");
+            descendStatements(ifNode.thenBlock);
+            emit("jumpI => " + lJoin);
+            emit(lFalse + ": nop");
+            descendStatements(ifNode.elseBlock);
+            emit(lJoin + ": nop");
+            }
+            else {
+            popTo("r2");
+            emit("cbr r2 => " + lTrue + ", " + lJoin);
+            emit(lTrue + ": nop");
+            descendStatements(ifNode.thenBlock);
+            emit(lJoin + ": nop");
+            }
+
         }
         else if (node instanceof MainNode) {
             MainNode mainNode = (MainNode) node;

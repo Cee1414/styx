@@ -1,0 +1,13 @@
+main(x, y) {
+    if (x > y) {
+        z = x + 10;
+        if (z == 20) {
+            print(z);
+        } else {
+            print(z + 1);
+        }
+    } else {
+        z = y + 20;
+        print(z);
+    }
+}

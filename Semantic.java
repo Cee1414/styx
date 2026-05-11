@@ -41,6 +41,14 @@ public class Semantic {
             checkAssignment(assignmentStatement.value);
             memory.add(id);
         }
+        else if (node instanceof IfNode) {
+            IfNode ifNode = (IfNode) node;
+            checkAssignment(ifNode.condition);
+            checkAssignment(ifNode.thenBlock);
+            if (ifNode.elseBlock != null) {
+                checkAssignment(ifNode.elseBlock);
+            }
+        }
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;
             checkAssignment(printStatement.value);

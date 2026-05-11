@@ -49,6 +49,15 @@ public class ASTPrinter {
             System.out.println("Print");
             printAST(printStatement.value, indent + 1);
         }
+        else if (node instanceof IfNode) {
+            IfNode ifNode = (IfNode) node;
+            System.out.println("IfStmt");
+            printAST(ifNode.condition, indent + 1);
+            printAST(ifNode.thenBlock, indent + 1);
+            if (ifNode.elseBlock != null) {
+                printAST(ifNode.elseBlock, indent + 1);
+            }
+        }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
         }
