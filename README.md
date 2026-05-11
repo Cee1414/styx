@@ -6,7 +6,7 @@ Styx is a small compiler that carries code downward, from raw syntax into execut
 
 ## Features
 - Parses arithmetic with correct operator precedence (`+`, `-`, `*`, `/`)
-- Supports variables, assignment statements, and nested blocks
+- Supports variables, assignment statements, print statements, and nested blocks
 - Handles control flow with `if`, `else`, and `while`
 - Supports multi-line programs and file/stdin input
 - Builds a custom Abstract Syntax Tree (AST) using ANTLR visitors
