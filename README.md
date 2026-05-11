@@ -2,27 +2,29 @@
 
 A boundary between worlds.
 
-Styx is a small compiler that carries code downward, from raw syntax into execution. It ferries programs from high-level expressions into precise, explicit instructions.
+Styx is a small compiler that carries code downward, from raw syntax into execution. It ferries programs from high-level code into precise, explicit instructions.
 
-## Phase One Features:
-- Parses arithmetic expressions with correct operator precedence (`+`, `-`, `*`, `/`)
-- Supports variables and assignment statements
-- Handles parentheses for grouping expressions
-- Builds an Abstract Syntax Tree (AST) using an ANTLR visitor
-- Prints a structured representation of the AST
+## Features
+- Parses arithmetic with correct operator precedence (`+`, `-`, `*`, `/`)
+- Supports variables, assignment statements, and nested blocks
+- Handles control flow with `if`, `else`, and `while`
+- Supports multi-line programs and file/stdin input
+- Builds a custom Abstract Syntax Tree (AST) using ANTLR visitors
+- Prints structured AST output for debugging and inspection
 
-- Performs a simple semantic-level operation:
-  - Traverses the AST to detect use of variables before assignment
-  - Demonstrates manipulation of the parse tree via a custom visitor
+### Semantic Analysis
 
-- Supports multi-line programs with multiple statements
-- Accepts input from standard input or file redirection
+- Traverses the AST to detect variables used before assignment
+- Tracks initialized parameters and variable state through control flow
+- Demonstrates recursive tree traversal and semantic checking passes
 
-- generates ILOC/Nickle-style intermediate code using stack-based expression evaluation
-- Evaluates expressions in postorder (left → right → operator)
-- Pushes intermediate values onto a memory-backed stack and pops operands for computation
-- Emits arithmetic instructions (`add`, `sub`, `mult`, `div`) over register values
-- Stores variables at fixed memory offsets and loads them when referenced
+### Code Generation
+
+- Targets a custom VM ISA through intermediate code generation
+- Uses stack-based evaluation with postorder traversal
+- Lowers control flow into labels and conditional branches
+- Stores variables at fixed memory offsets
+- Generates register-based arithmetic and memory operations
 
 
 ## Dependencies

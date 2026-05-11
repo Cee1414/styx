@@ -1,0 +1,17 @@
+main(fibCount) {
+    a = 0;
+    b = 1;
+    temp = 0;
+    index = 0;
+
+    while (index < fibCount) {
+
+        print(b);
+
+        temp = b;
+        b = a + b;
+        a = temp;
+
+        index = index + 1;
+    }
+}
