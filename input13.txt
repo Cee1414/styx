@@ -1,0 +1,10 @@
+main(x, y) {
+    while (x > y) {
+        z = x + 10;
+        if (z == 20) {
+            print(z);
+        } else {
+            print(z + 1);
+        }
+    }
+}

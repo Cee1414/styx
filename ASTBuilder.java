@@ -58,6 +58,11 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
         }
         return new IfNode(condition, thenBlock, elseBlock);
     }
+    public ASTNode visitWhileStmt(styxParser.WhileStmtContext ctx) {
+        ASTNode condition = visit(ctx.expr());
+        BlockNode body = (BlockNode) visit(ctx.block());
+        return new WhileNode(condition, body);
+    }
 
     @Override
     public ASTNode visitParens(styxParser.ParensContext ctx) {

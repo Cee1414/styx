@@ -58,6 +58,12 @@ public class ASTPrinter {
                 printAST(ifNode.elseBlock, indent + 1);
             }
         }
+        else if (node instanceof WhileNode) {
+            WhileNode whileNode = (WhileNode) node;
+            System.out.println("WhileStmt");
+            printAST(whileNode.condition, indent + 1);
+            printAST(whileNode.body, indent + 1);
+        }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());
         }

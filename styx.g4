@@ -19,6 +19,7 @@ stat
   : expr ';'                                  # ExprStmt
   | ID '=' expr ';'                           # assign
   | 'if' '(' expr ')' block ('else' block)?   # ifStmt
+  | 'while' '(' expr ')' block                # whileStmt
   | 'print' '(' expr ')' ';'                  # printStmt
   | block                                     # blockStmt
   ;

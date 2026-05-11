@@ -49,6 +49,11 @@ public class Semantic {
                 checkAssignment(ifNode.elseBlock);
             }
         }
+        else if (node instanceof WhileNode) {
+            WhileNode whileNode = (WhileNode) node;
+            checkAssignment(whileNode.condition);
+            checkAssignment(whileNode.body);
+        }
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;
             checkAssignment(printStatement.value);

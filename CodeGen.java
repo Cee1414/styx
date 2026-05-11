@@ -106,7 +106,20 @@ public class CodeGen {
             descendStatements(ifNode.thenBlock);
             emit(lJoin + ": nop");
             }
-
+        }
+        else if (node instanceof WhileNode) {
+            WhileNode whileNode = (WhileNode) node;
+            String lCond = getLabel();
+            String lBody = getLabel();
+            String lExit = getLabel();
+            emit(lCond + ": nop");
+            descendStatements(whileNode.condition);
+            popTo("r2");
+            emit("cbr r2 => " + lBody + ", " + lExit);
+            emit(lBody +": nop");
+            descendStatements(whileNode.body);
+            emit("jumpI => " + lCond);
+            emit(lExit + ": nop");            
         }
         else if (node instanceof MainNode) {
             MainNode mainNode = (MainNode) node;
