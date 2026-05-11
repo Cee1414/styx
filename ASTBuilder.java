@@ -13,7 +13,16 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
 
     @Override
     public ASTNode visitMainFunction(styxParser.MainFunctionContext ctx) {
-        return visit(ctx.block());
+        List<String> params = new ArrayList<>();
+
+        if (ctx.paramList() != null) {
+            for (TerminalNode id : ctx.paramList().ID()) {
+                params.add(id.getText());
+            }
+        }
+
+        BlockNode block = (BlockNode) visit(ctx.block()); 
+        return new MainNode(params,block);
     }
 
     @Override
@@ -24,7 +33,6 @@ public class ASTBuilder extends styxBaseVisitor<ASTNode> {
     @Override
     public ASTNode visitBlock(styxParser.BlockContext ctx) {
         List<ASTNode> statements = new ArrayList<>();
-
         for (styxParser.StatContext s : ctx.stat()) {
             ASTNode stmt = visit(s);
             if (stmt != null) {

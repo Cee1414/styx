@@ -75,6 +75,27 @@ public class CodeGen {
             int variableOffset = memory.get(id);
             emit("storeAI " + "r2" + " => r0, " + variableOffset);
         }
+        else if (node instanceof MainNode) {
+            MainNode mainNode = (MainNode) node;
+            // assignment code from CLI per param
+            // for (String id : mainNode.params) {
+            for (int paramNum = 0; paramNum < mainNode.params.size(); paramNum++){
+                //get CLI Value from argv
+                int cliOffset = paramNum * 8;
+                emit("loadAI r_argv, " + cliOffset + " => r4");
+                emit("atoi r4 => r4");
+                //handle variable store offset logic
+                String id = mainNode.params.get(paramNum);
+                if (!memory.containsKey(id)) {
+                    memory.put(id, nextVariableOffset);
+                    nextVariableOffset += 8;
+                }
+                int variableOffset = memory.get(id);
+                emit("storeAI r4 => r0, " + variableOffset);
+            }
+            //enter main block
+            descendStatements(mainNode.body);
+        }
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;
             descendStatements(printStatement.value);
@@ -106,11 +127,8 @@ public class CodeGen {
         emit("loadI 0 => r0");
         emit("loadI 256 => r1");
 
-        BlockNode block = (BlockNode) node;
+        descendStatements(node);
 
-            for (ASTNode stmt : block.statements) {
-                descendStatements(stmt);
-            }        
         return out;
         }
 

@@ -7,7 +7,14 @@ public class Semantic {
     Set<String> memory = new HashSet<>();
     public void checkAssignment(ASTNode node) {
 
-        if (node instanceof BlockNode ) {
+        if (node instanceof MainNode) {
+            MainNode mainNode = (MainNode) node;
+            for (String param : mainNode.params) {
+                memory.add(param);
+            }
+            checkAssignment(mainNode.body);
+        }
+        else if (node instanceof BlockNode ) {
             BlockNode block = (BlockNode) node;
 
             for (ASTNode stmt : block.statements) {
@@ -15,24 +22,24 @@ public class Semantic {
             }
         }
         else if (node instanceof IntNode) {
-        return;
+            return;
         }
         else if (node instanceof IdNode) {
-        IdNode idNode = (IdNode) node;
-        if (!memory.contains(idNode.id)) {
-            System.out.println("Error: " + idNode.id + " used before assignment");
-        }
+            IdNode idNode = (IdNode) node;
+            if (!memory.contains(idNode.id)) {
+                System.out.println("Error: " + idNode.id + " used before assignment");
+            }
         }  
         else if (node instanceof OperationNode) {
-        OperationNode op = (OperationNode) node;
-        checkAssignment(op.left);
-        checkAssignment(op.right);
+            OperationNode op = (OperationNode) node;
+            checkAssignment(op.left);
+            checkAssignment(op.right);
         }
         else if (node instanceof AssignNode) {
-        AssignNode assignmentStatement = (AssignNode) node;
-        String id = assignmentStatement.id.id;
-        checkAssignment(assignmentStatement.value);
-        memory.add(id);
+            AssignNode assignmentStatement = (AssignNode) node;
+            String id = assignmentStatement.id.id;
+            checkAssignment(assignmentStatement.value);
+            memory.add(id);
         }
         else if (node instanceof PrintNode) {
             PrintNode printStatement = (PrintNode) node;

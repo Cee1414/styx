@@ -4,7 +4,11 @@ import Lexer;
 prog: mainFunction EOF;
 
 mainFunction
-  : 'main' '('')' block
+  : 'main' '(' paramList? ')' block
+  ;
+
+paramList
+  : ID (',' ID)*
   ;
 
 block

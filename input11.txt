@@ -1,0 +1,33 @@
+main(a, b, c) {
+  print(a);
+  print(b);
+  print(c);
+
+  x = a + b * c;
+  y = (a + b) * (c - 2);
+  z = x == y;
+  w = x > y;
+  q = x < y;
+
+  print(x);
+  print(y);
+  print(z);
+  print(w);
+  print(q);
+
+  {
+    inner = x + y * (a - b);
+    print(inner);
+
+    {
+      deeper = (inner + c) / 2;
+      print(deeper);
+      deeper == inner;
+    }
+
+    inner + 999;
+  }
+
+  final = (x + y) * (z + w + q);
+  print(final);
+}
