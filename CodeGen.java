@@ -40,7 +40,7 @@ public class CodeGen {
         else if (node instanceof IdNode) {
             IdNode idNode = (IdNode) node;
             if (!memory.containsKey(idNode.id)) {
-                System.out.println("Error: " + idNode.id + " used before assignment");
+                System.out.println("CodeGen Error: " + idNode.id + " used before assignment");
             }
             emit("loadAI " + "r0, " + memory.get(idNode.id) + " => r2");
             // emit("loadAI r1, 0 => " + reg);

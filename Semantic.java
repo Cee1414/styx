@@ -27,7 +27,7 @@ public class Semantic {
         else if (node instanceof IdNode) {
             IdNode idNode = (IdNode) node;
             if (!memory.contains(idNode.id)) {
-                System.out.println("Error: " + idNode.id + " used before assignment");
+                System.out.println("Semantic Error: " + idNode.id + " used before assignment");
             }
         }  
         else if (node instanceof OperationNode) {
@@ -59,7 +59,9 @@ public class Semantic {
             checkAssignment(printStatement.value);
         }
         else if (node instanceof ExprNode) {
-            System.out.println("unused expression, skipping evaluation");
+            ExprNode exprNode = (ExprNode) node;
+            System.out.println("unused expression");
+            checkAssignment(exprNode.value);
         }
         else {
             throw new RuntimeException("Unknown AST node type: " + node.getClass().getSimpleName());

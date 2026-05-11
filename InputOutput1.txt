@@ -1,0 +1,158 @@
+Program:
+
+main(x, y) {
+
+    if (x > y) {
+
+        if (x > 10) {
+            print(x);
+        } else {
+            print(y);
+        }
+
+    } else {
+
+        if (y > 10) {
+            print(y);
+        } else {
+            print(x);
+        }
+
+    }
+}
+
+Compiler Output:
+
+ian@ian-g428:~/Desktop/Compiler/styx$ java -cp "$CP:." Driver < input1.txt
+print AST
+Main
+  x
+  y
+  Block
+    IfStmt
+      >
+        x
+        y
+      Block
+        IfStmt
+          >
+            x
+            10
+          Block
+            Print
+              x
+          Block
+            Print
+              y
+      Block
+        IfStmt
+          >
+            y
+            10
+          Block
+            Print
+              y
+          Block
+            Print
+              x
+
+semantic check
+
+verified assignment
+loadI 0 => r0
+loadI 256 => r1
+loadAI r_argv, 0 => r4
+atoi r4 => r4
+storeAI r4 => r0, 0
+loadAI r_argv, 8 => r4
+atoi r4 => r4
+storeAI r4 => r0, 8
+loadAI r0, 0 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+loadAI r0, 8 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r3
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cmp_GT r2, r3 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cbr r2 => L0, L1
+L0: nop
+loadAI r0, 0 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+loadI 10 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r3
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cmp_GT r2, r3 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cbr r2 => L3, L4
+L3: nop
+loadAI r0, 0 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+p_int r2
+jumpI => L5
+L4: nop
+loadAI r0, 8 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+p_int r2
+L5: nop
+jumpI => L2
+L1: nop
+loadAI r0, 8 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+loadI 10 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r3
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cmp_GT r2, r3 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+cbr r2 => L6, L7
+L6: nop
+loadAI r0, 8 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+p_int r2
+jumpI => L8
+L7: nop
+loadAI r0, 0 => r2
+storeAI r2 => r1, 0
+addI r1, 8 => r1
+subI r1, 8 => r1
+loadAI r1, 0 => r2
+p_int r2
+L8: nop
+L2: nop
+
+VM Output:
+
+ian@ian-g428:~/Desktop/Compiler/nickleV2$ ./hellobuddy 15 5
+15

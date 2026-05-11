@@ -1,3 +1,20 @@
-5+2*3+4
-(1+2)*3
-10/2+7
+main(x, y) {
+
+    if (x > y) {
+
+        if (x > 10) {
+            print(x);
+        } else {
+            print(y);
+        }
+
+    } else {
+
+        if (y > 10) {
+            print(y);
+        } else {
+            print(x);
+        }
+
+    }
+}

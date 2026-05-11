@@ -25,7 +25,7 @@ public class Driver {
         System.out.println("\nsemantic check");
         Semantic verifier = new Semantic();
         verifier.checkAssignment(ast);
-        System.out.println("\nverified assignment");
+        System.out.println("\nFinished Semantic Check");
 
         CodeGen gen = new CodeGen();
         List<String> code = gen.generate(ast);
